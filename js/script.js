@@ -1,7 +1,9 @@
+// openweathermap.org API 804cf3b11e9abeee25a8f6e6cb189d31
+// endpoint: https://api.openweathermap.org/data/2.5/weather?q=Philadelphia&units=imperial&APPID=804cf3b11e9abeee25a8f6e6cb189d31
 
-
+// jQuery to get the weather JSON
 // const cityName = document.getElementById("city-name");
-
+let city = "Philadelphia";
 // const input = document.getElementById("user-city");
 // const cityoutput = document.getElementById("cityoutput");
 // input.addEventListener("click", function(e) {
@@ -9,17 +11,15 @@
 //   console.log(cityoutput);
 //   e.preventDefault;
 // });
-// Create an input for the user to enter a "Valid" city name then grab that as the value for city
-
-// use jQuery to get the weather JSON
-let city = "Philadelphia";
+// Creat an input for the user to enter a "Valid" city name then grab that as the value for city
 let currentLoc = "Weather for " + city;
 $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&APPID=804cf3b11e9abeee25a8f6e6cb189d31", function(data) {
-  // console.log(data);
+  console.log(data);
   
   let icon = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
   let weatherDesc = "Conditions: " + data.weather[0].main + " (" + data.weather[0].description + ")";
-  let temp = "Temperature: " + Math.round(data.main.temp) + " (F)";
+  let temp = "Temp.: " + Math.round(data.main.temp) + " (F)";
+  let feelsLike = "(Feels like: " + Math.round(data.main.feels_like) + ")";
   let windSpeed = "Wind speed: " + Math.round(data.wind.speed) + " mph";
   let windGust = "Wind gusts: " + Math.round(data.wind.gust) + " mph";
   if (!data.wind.gust) {
@@ -43,6 +43,7 @@ $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=
   $('.icon').attr('src', icon);
   $('.weather').append(weatherDesc);
   $('.temp').append(temp);
+  $('.feels-like').append(feelsLike);
   $('.wind-speed').append(windSpeed);
   $('.wind-gust').append(windGust);
   $('.sunrise').append(riseTime);
