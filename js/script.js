@@ -1,6 +1,9 @@
-
+const form = document.getElementById('city-form');
+const cityName = document.getElementById('city-name');
+let userCity = cityName.value;
 
 // CITY
+/* Think I need to put EVERYTHING in a function of if statement so defult to Philly unless city entered by user */
 let city = "Philadelphia";
 let currentLoc = "Weather for " + city;
 $('.city').append(currentLoc);
@@ -37,38 +40,34 @@ $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=
   // Get integer and decimal as separate values
   let latInt = Math.trunc(lat);
   let latDecimal, latMins, latMinInt, latMinDec, latSecs = "";
-  console.log("Lat Degrees: " + latInt);
+  // console.log("Lat Degrees: " + latInt);
   if (lat > 0) {
     latDecimal = lat - latInt;
-    console.log(latDecimal);
     latMins = latDecimal * 60;
     latMinInt = Math.trunc(latMins);
     latMinDec = latMins - latMinInt;
     latSecs = (latMinDec * 60).toFixed(1);
   } else {
     latDecimal = Math.abs(lat - latInt);
-    console.log(latDecimal);
     latMins = latDecimal * 60;
     latMinInt = Math.trunc(latMins);
     latMinDec = latMins - latMinInt;
     latSecs = (latMinDec * 60).toFixed(1);
   }
-  console.log("Lat Minutes: " + latMinInt);
-  console.log("Lat Seconds: " + latSecs);
+  // console.log("Lat Minutes: " + latMinInt);
+  // console.log("Lat Seconds: " + latSecs);
 
   let lonInt = Math.trunc(lon);
   let lonDecimal, lonMins, lonMinInt, lonMinDec, lonSecs = "";
-  console.log("Long Degrees: " + lonInt);
+  // console.log("Long Degrees: " + lonInt);
   if (lon > 0) {
     lonDecimal = lon - lonInt;
-    console.log(lonDecimal);
     lonMins = lonDecimal * 60;
     lonMinInt = Math.trunc(lonMins);
     lonMinDec = lonMins - lonMinInt;
     lonSecs = (lonMinDec * 60).toFixed(1);
   } else {
     lonDecimal = Math.abs(lon - lonInt);
-    console.log(lonDecimal);
     lonMins = lonDecimal * 60;
     lonMinInt = Math.trunc(lonMins);
     lonMinDec = lonMins - lonMinInt;
@@ -77,12 +76,12 @@ $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=
 
   let latDegMinSec = latInt + `<span>&deg;</span> ` + latMinInt + `<span>&prime;</span> ` + latSecs + `<span>&Prime;</span> `;
   let lonDegMinSec = lonInt + `<span>&deg;</span> ` + lonMinInt + `<span>&prime;</span> ` + lonSecs + `<span>&Prime;</span> `;
-  let latDesc = "Latitude: " + latDegMinSec +  " (" + data.coord.lat + ")";
-  let longDesc = "Longitude: " + lonDegMinSec +  " (" + data.coord.lon + ")";
+  let latDesc = "Lat.: " + latDegMinSec +  " (" + data.coord.lat + ")";
+  let longDesc = "Long.: " + lonDegMinSec +  " (" + data.coord.lon + ")";
   $('.lat').append(latDesc);
   $('.long').append(longDesc);
-  console.log("Long Minutes: " + lonMinInt);
-  console.log("Long Seconds: " + lonSecs);
+  // console.log("Long Minutes: " + lonMinInt);
+  // console.log("Long Seconds: " + lonSecs);
 
   // SUNRISE
   let sunriseTime = data.sys.sunrise;
@@ -117,7 +116,7 @@ $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=
 
   // WIND DIRECTION
   let windDir = data.wind.deg;
-  console.log(windDir);
+  // console.log(windDir);
   let direction = "";
   if (windDir >= 11.25 && windDir < 33.75) {
     direction = " NNE"
@@ -160,6 +159,7 @@ $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=
 // https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
 // https://api.openweathermap.org/data/2.5/onecall?lat=-75.16&lon=39.95&exclude=hourly,daily&units=imperial&appid=804cf3b11e9abeee25a8f6e6cb189d31
 
+const dailyData = document.getElementById("daily-data");
 const hourlyData = document.getElementById("hourly-data");
 const weatherAlerts = document.getElementById("weather-alerts");
 const hourlyDetail = document.getElementById("hourly-detail");
@@ -170,9 +170,66 @@ $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
 
   // need a for or forEach loop here and I need variables to be appended to the html tags
 
+  let dayData = data.daily;
   let hrData = data.hourly;
-  console.log(hrData.length);
+  // console.log(dayData.length);
 
+  // DAILY LOOP
+  for (i = 0; i < dayData.length; i++) {
+    // let date = dayData[i].dt; NO, need to grab todays date if [0], then ++ for remaining dates
+    let date = dayData[i].dt;
+    let date2 = new Date(date * 1000).toLocaleDateString('en-us', { weekday:"short", year:"numeric", month:"short", day:"numeric"});
+    let tempMin = Math.round(dayData[i].temp.min);
+    let tempMax = Math.round(dayData[i].temp.max);
+    let humidity = dayData[i].humidity;
+    let precip = dayData[i].pop;
+    let moonPhase = dayData[i].moon_phase;
+    let moonRise = dayData[i].moonrise;
+    let moonrise2 = new Date(moonRise * 1000).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    let moonSet = dayData[i].moonset;
+    let moonset2 = new Date(moonSet * 1000).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    let dailyMain = dayData[i].weather[0].main;
+    let dailyDesc = dayData[i].weather[0].description;
+
+    // SUNRISE
+    let sunriseTime = data.daily[i].sunrise;
+    let dateRise = new Date(sunriseTime * 1000);
+    let riseTime = "Sunrise: " + dateRise.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    // console.log(riseTime);
+    
+    // SUNSET
+    let sunsetTime = data.daily[i].sunset;
+    let dateSet = new Date(sunsetTime * 1000);
+    let setTime = "Sunset: " + dateSet.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    let dayOutput = 
+    `<li class="curr-hour" value>${date2}
+      <ul id="daily-${[i]}">
+        <li>Hi: ${tempMin}<span>&deg;</span>F</li>
+        <li>Low: ${tempMax}<span>&deg;</span>F</li>
+        <li>Humidity: ${humidity}%</li>
+        <li>Precip %: ${precip}%</li>
+
+        <li>Moon phase: ${moonPhase}???</li>
+        <li>Moon rise: ${moonrise2}</li>
+        <li>Moon set: ${moonset2}</li>
+        
+        <li>${dailyMain}</li>
+        <li>(${dailyDesc})</li>
+
+        <li>${riseTime}</li>
+        <li>${setTime}</li>
+      </ul>
+    </li>`;
+
+    let dailyText = document.createElement('li');
+
+    dailyText.classList.add('daily-data');
+
+    dailyData.insertAdjacentHTML("beforeend", dayOutput);
+  }
+
+  // HOURLY LOOP
   for (i = 0; i < hrData.length - 18; i++) {
 
     let time = data.hourly[i].dt
