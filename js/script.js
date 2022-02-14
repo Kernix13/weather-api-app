@@ -88,16 +88,27 @@ $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=
   let dateRise = new Date(sunriseTime * 1000);
   let riseTime = "Sunrise: " + dateRise.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   $('.sunrise').append(riseTime);
-  // console.log(riseTime);
+  console.log(sunriseTime);
   
   // SUNSET
   let sunsetTime = data.sys.sunset;
   let dateSet = new Date(sunsetTime * 1000);
   let setTime = "Sunset: " + dateSet.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   $('.sunset').append(setTime);
-  let daylight = setTime - riseTime;
-  // console.log("Hours of light: " + daylight);
-  // above returns NaN - how to subtract times?
+  console.log(sunsetTime);
+
+  // Calculate hours of daylight
+  let daylight = sunsetTime - sunriseTime;
+  let lightHrs = Math.trunc(daylight/3600);
+  console.log("hrs of light: " + lightHrs);
+  let lightMins = Math.trunc((daylight/3600 - lightHrs) * 60);
+  console.log("mins of light: " + lightMins);
+  let lightSecs = Math.round(((daylight/3600 - lightHrs) * 60 - lightMins) * 60);
+  console.log("secs of light: " + lightSecs);
+  let lightLength = new Date(daylight * 1000);
+  let hrsOfLight = "Hrs of light: " + lightHrs + ":" + lightMins + ":" + lightSecs;
+  console.log("Total daylight: " + hrsOfLight);
+  $('.daylight').append(hrsOfLight);
 
   // HUMIDITY, PRESSURE, VISIBILITY
   let humidity = "Humidity: " + data.main.humidity + "%";
@@ -205,8 +216,8 @@ $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
     let dayOutput = 
     `<li class="curr-hour" value>${date2}
       <ul id="daily-${[i]}">
-        <li>Hi: ${tempMin}<span>&deg;</span>F</li>
-        <li>Low: ${tempMax}<span>&deg;</span>F</li>
+        <li>Low: ${tempMin}<span>&deg;</span>F</li>
+        <li>High: ${tempMax}<span>&deg;</span>F</li>
         <li>Humidity: ${humidity}%</li>
         <li>Precip %: ${precip}%</li>
 
@@ -231,6 +242,9 @@ $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
 
   // HOURLY LOOP
   for (i = 0; i < hrData.length - 18; i++) {
+
+    let main = data.hourly[i].weather[0].main;
+    let desc = data.hourly[i].weather[0].description;
 
     let time = data.hourly[i].dt
     let hour = new Date(time * 1000);
@@ -288,14 +302,13 @@ $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
     let hrOutput = 
     `<li class="curr-hour" value>${outputHour}
       <ul id="hourly-${[i]}">
-        <li>${temp}</li>
-        <li>${feelsLike}</li>
+        <li>Conditions: ${main} <span>(${desc})</span></li>
 
-        <li>${windSpeed}</li>
-        <li>${gustSpeed}</li>
-        
-        <li>Humidity: ${humidity}</li>
-        <li>Precip. %: ${pop}</li>
+        <li>${temp} <span>${feelsLike}</span></li>
+
+        <li>${windSpeed} | ${gustSpeed}</li>
+      
+        <li>Humidity: ${humidity} | Precip. %: ${pop}</li>
       </ul>
     </li>`;
         // <li>Wind dir.: ${windDir}<span>&deg;</span> ${direction}</li>
@@ -307,8 +320,6 @@ $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
     weatherText.classList.add('hourly-data');
 
     hourlyData.insertAdjacentHTML("beforeend", hrOutput);
-
-    // NEED TO ADD DAILY MAX AND MIN
   }
 
     if (data.alert) {
@@ -341,6 +352,13 @@ $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
       console.log("Weather alerts for this area: No alerts")
     }
 
+    if (data.alert) {
+      let alertNotice = "Alerts: " + `${alertEvent}`;
+      $('.alert').append(alertNotice);
+    } else {
+      let alertNotice = "Alerts: No alerts"
+      $('.alert').append(alertNotice);
+    }
 });
 
 
