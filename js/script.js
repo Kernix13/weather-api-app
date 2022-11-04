@@ -31,7 +31,7 @@ $.getJSON('https://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=
   console.log('data.weather array # =  ' + descTwo);
 
   // TEMPERATURE
-  let temp = 'Temp.: ' + Math.round(data.main.temp) + `<span>&deg;</span>` + 'F';
+  let temp = 'Temperature: ' + Math.round(data.main.temp) + `<span class="deg"><sup>&deg;</sup></span>` + ' F';
   let feelsLike = '(Feels like: ' + Math.round(data.main.feels_like) + `<span>&deg;</span>` + ')';
   $('.temp').append(temp);
   $('.feels-like').append(feelsLike);
