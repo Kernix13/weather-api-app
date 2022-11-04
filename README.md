@@ -2,7 +2,7 @@
 
 From the freeCodeCamp video Using a [Public API - Tutorial for Beginners](https://youtu.be/BYsTrGH6B2s).
 
-This is my first and only jQuery app. I last updated the code in January of 2022.
+This is my first and only jQuery app. I will be refactoring it to be vanilla JavaScript.
 
 ## To-Do
 

@@ -1,69 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./css/style.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <title>FCC Weather API</title>
-</head>
-<body>
-  
-  <div class="weather-container">
-    <form id="city-form">
-      <label for="">Enter City or zip code (not working)</label>
-      <input id="city-name" type="text" placeholder="Enter city name" name="city-name">
-      <input id="user-city" type="submit">
-    </form>
-    <p class="cityoutput"></p>
-    <div class="location"></div>
-    <h2 class="city"></h2> 
-    <p class="lat"></p>
-    <p class="long"></p>
-    <img class="icon">
-    <p class="weather"></p>
-    <p class="temp"></p>
-    <span id="wtf" class="feels-like"></span>
-    <div class="row">
-      <div class="col">
-        <p class="wind-speed"></p>
-        <p class="wind-gust"></p>
-        <p class="wind-degree"></p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <title>FCC Weather API</title>
+  </head>
+  <body>
+    <div class="weather-container">
+      <form id="city-form">
+        <label for="">Enter City or zip code (not working)</label>
+        <input id="city-name" type="text" placeholder="Enter city name" name="city-name" />
+        <input id="user-city" type="submit" />
+      </form>
+      <p class="cityoutput"></p>
+      <div class="location"></div>
+      <h2 class="city"></h2>
+      <p class="lat"></p>
+      <p class="long"></p>
+      <img class="icon" />
+      <p class="weather"></p>
+      <p class="temp"></p>
+      <span id="wtf" class="feels-like"></span>
+      <div class="row">
+        <div class="col">
+          <p class="wind-speed"></p>
+          <p class="wind-gust"></p>
+          <p class="wind-degree"></p>
+        </div>
+        <div class="col">
+          <p class="sunrise"></p>
+          <p class="sunset"></p>
+          <p class="daylight"></p>
+        </div>
       </div>
-      <div class="col">
-        <p class="sunrise"></p>
-        <p class="sunset"></p>
-        <p class="daylight"></p>
+      <div class="row">
+        <div class="col">
+          <p class="humidity"></p>
+          <p class="pressure"></p>
+        </div>
+        <div class="col">
+          <p class="visibility"></p>
+          <p class="alert"></p>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <p class="humidity"></p>
-        <p class="pressure"></p>
+
+      <div class="hourly">
+        <ul id="hourly-data" class="hourly-data"></ul>
       </div>
-      <div class="col">
-        <p class="visibility"></p>
-        <p class="alert"></p>
+
+      <div class="daily">
+        <ul id="daily-data" class="daily-data"></ul>
       </div>
-      
-    </div>
-    
-    <div class="hourly">
-      <ul id="hourly-data" class="hourly-data"></ul>
+
+      <div class="alerts">
+        <ul id="weather-alerts" class="weather-alerts">
+          ??
+        </ul>
+      </div>
     </div>
 
-    <div class="daily">
-      <ul id="daily-data" class="daily-data"></ul>
-    </div>
-    
-    <div class="alerts">
-      <ul id="weather-alerts" class="weather-alerts">??</ul>
-    </div>
-    
-    
-  </div>
-
-  <script src="./js/script.js"></script>
-</body>
+    <script src="./js/script.js"></script>
+  </body>
 </html>
