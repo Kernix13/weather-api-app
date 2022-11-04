@@ -227,7 +227,7 @@ $.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
     let dateSet = new Date(sunsetTime * 1000);
     let setTime = 'Sunset: ' + dateSet.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    let dayOutput = `<li class="curr-day" value>${date2}
+    let dayOutput = `<li class="curr-day"><span class="bold">${date2}</span>
       <ul id="daily-${[i]}">
         <li>Low: ${tempMin}<span>&deg;</span>F</li>
         <li>High: ${tempMax}<span>&deg;</span>F</li>
@@ -258,7 +258,7 @@ $.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
 
     let time = data.hourly[i].dt;
     let hour = new Date(time * 1000);
-    let outputHour = hour.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) + ': ';
+    let outputHour = hour.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 
     let temp = 'Temp.: ' + Math.round(data.hourly[i].temp) + `<span>&deg;</span>` + 'F';
     let feelsLike = '(Feels like: ' + Math.round(data.hourly[i].feels_like) + `<span>&deg;</span>` + ')';
@@ -309,7 +309,7 @@ $.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
       direction = ' N';
     }
 
-    let hrOutput = `<li class="curr-hour" value>${outputHour}
+    let hrOutput = `<li class="curr-hour"><span class="bold">${outputHour}</span>
       <ul id="hourly-${[i]}">
         <li>Conditions: ${main}</li>
 
