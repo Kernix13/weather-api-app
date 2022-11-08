@@ -213,7 +213,7 @@ $.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
     let moonrise2 = new Date(moonRise * 1000).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
     let moonSet = dayData[i].moonset;
     let moonset2 = new Date(moonSet * 1000).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-    let dailyMain = dayData[i].weather[0].main;
+    let dailyMain = dayData[i].weather[0].description.slice(0, 1).toUpperCase() + dayData[i].weather[0].description.slice(1);
     // let dailyDesc = dayData[i].weather[0].description;
 
     // SUNRISE
@@ -254,7 +254,7 @@ $.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
   // HOURLY LOOP
   for (i = 0; i < hrData.length - 18; i++) {
     let main = data.hourly[i].weather[0].main;
-    let desc = data.hourly[i].weather[0].description;
+    let desc = data.hourly[i].weather[0].description.slice(0, 1).toUpperCase() + data.hourly[i].weather[0].description.slice(1);
 
     let time = data.hourly[i].dt;
     let hour = new Date(time * 1000);
@@ -311,7 +311,7 @@ $.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
 
     let hrOutput = `<li class="curr-hour"><span class="bold">${outputHour}</span>
       <ul id="hourly-${[i]}">
-        <li>Conditions: ${main}</li>
+        <li>Conditions: ${desc}</li>
 
         <li>${temp} <span>${feelsLike}</span></li>
 
