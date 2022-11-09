@@ -213,7 +213,7 @@ $.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
     let moonrise2 = new Date(moonRise * 1000).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
     let moonSet = dayData[i].moonset;
     let moonset2 = new Date(moonSet * 1000).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-    let dailyMain = dayData[i].weather[0].description.slice(0, 1).toUpperCase() + dayData[i].weather[0].description.slice(1);
+    let dailyMain = dayData[i].weather[0].main.slice(0, 1).toUpperCase() + dayData[i].weather[0].main.slice(1);
     // let dailyDesc = dayData[i].weather[0].description;
 
     // SUNRISE
@@ -229,6 +229,8 @@ $.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
 
     let dayOutput = `<li class="curr-day"><span class="bold">${date2}</span>
       <ul id="daily-${[i]}">
+        <li>${dailyMain}</li>
+
         <li>Low: ${tempMin}<span>&deg;</span>F</li>
         <li>High: ${tempMax}<span>&deg;</span>F</li>
         <li>Precip: ${precip}%</li>
@@ -237,8 +239,6 @@ $.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
         <li>Moon rise: ${moonrise2}</li>
         <li>Moon set: ${moonset2}</li>
         
-        <li>${dailyMain}</li>
-
         <li>${riseTime}</li>
         <li>${setTime}</li>
       </ul>
