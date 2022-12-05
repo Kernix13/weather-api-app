@@ -4,6 +4,8 @@ From the freeCodeCamp video Using a [Public API - Tutorial for Beginners](https:
 
 This is my first and only jQuery app. I will be refactoring it to be vanilla JavaScript.
 
+FYI: The form is not functional. I have a city hard-coded in the JS.
+
 ## To-Do
 
 I need to somehow get a list of cities so that a user can type in their city and the autofill will populate the input field, orr to have a lage selct list. The select list should be by country, or if only for US, by state.
@@ -15,7 +17,6 @@ I need to somehow get a list of cities so that a user can type in their city and
 - How can I do the Wind direction differently? Can I add conditionals in a Switch statement?
 - Why do I have 2 Wind direction blocks?
 - Convert from jQuery to Vanialla JavaScript.
-
 
 ## Favicon
 
