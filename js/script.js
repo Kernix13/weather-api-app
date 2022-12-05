@@ -9,7 +9,7 @@ let currentLoc = 'Weather for ' + city;
 $('.city').append(currentLoc);
 
 // jQuery TO GET THE WEATHER JSON
-$.getJSON('https://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=imperial&APPID=804cf3b11e9abeee25a8f6e6cb189d31', function (data) {
+$.getJSON('https://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=imperial&APPID={API_KEY}', function (data) {
   console.log(data);
 
   // GET ICON FROM 2ND ARRAY IF AVAILABLE
@@ -182,7 +182,7 @@ $.getJSON('https://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=
 });
 
 // https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
-// https://api.openweathermap.org/data/2.5/onecall?lat=-75.16&lon=39.95&exclude=hourly,daily&units=imperial&appid=804cf3b11e9abeee25a8f6e6cb189d31
+// https://api.openweathermap.org/data/2.5/onecall?lat=-75.16&lon=39.95&exclude=hourly,daily&units=imperial&appid={API_KEY}
 
 const dailyData = document.getElementById('daily-data');
 const hourlyData = document.getElementById('hourly-data');
@@ -190,7 +190,7 @@ const weatherAlerts = document.getElementById('weather-alerts');
 const hourlyDetail = document.getElementById('hourly-detail');
 
 // let city2 = "Philadelphia";
-$.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&exclude=minutely&units=imperial&appid=804cf3b11e9abeee25a8f6e6cb189d31', function (data) {
+$.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&exclude=minutely&units=imperial&appid=(API_KEY}', function (data) {
   console.log(data);
 
   // need a for or forEach loop here and I need variables to be appended to the html tags
@@ -202,6 +202,8 @@ $.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
   // DAILY LOOP
   for (i = 0; i < dayData.length; i++) {
     // let date = dayData[i].dt; NO, need to grab todays date if [0], then ++ for remaining dates
+
+    // MAIN VARIABLES
     let date = dayData[i].dt;
     let date2 = new Date(date * 1000).toLocaleDateString('en-us', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
     let tempMin = Math.round(dayData[i].temp.min);
@@ -227,6 +229,7 @@ $.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
     let dateSet = new Date(sunsetTime * 1000);
     let setTime = 'Sunset: ' + dateSet.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+    // OUTPUT DAILY CONDITIONS
     let dayOutput = `<li class="curr-day"><span class="bold">${date2}</span>
       <ul id="daily-${[i]}">
         <li>${dailyMain}</li>
@@ -253,6 +256,7 @@ $.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
 
   // HOURLY LOOP
   for (i = 0; i < hrData.length - 18; i++) {
+    // MAIN VARIABLES
     let main = data.hourly[i].weather[0].main;
     let desc = data.hourly[i].weather[0].description.slice(0, 1).toUpperCase() + data.hourly[i].weather[0].description.slice(1);
 
@@ -272,8 +276,9 @@ $.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
 
     let windSpeed = 'Wind: ' + Math.round(data.hourly[i].wind_speed) + ' mph';
     let gustSpeed = 'Gusts: ' + Math.round(data.hourly[i].wind_gust) + ' mph';
-    let windDir = data.hourly[i].wind_deg;
 
+    // WIND DIRECTION
+    let windDir = data.hourly[i].wind_deg;
     let direction = '';
     if (windDir >= 11.25 && windDir < 33.75) {
       direction = ' NNE';
@@ -309,6 +314,7 @@ $.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat=39.95&lon=-75.16&
       direction = ' N';
     }
 
+    // OUTPUT HOURLY CONDITIONS
     let hrOutput = `<li class="curr-hour"><span class="bold">${outputHour}</span>
       <ul id="hourly-${[i]}">
         <li>Conditions: ${desc}</li>
